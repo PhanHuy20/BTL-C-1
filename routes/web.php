@@ -1,40 +1,26 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
-// Trang chủ
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
 });
 
-// Phần của Vi Thế Toàn - Quản lý xe máy [cite: 1, 27]
-Route::get('/motorcycles', function () {
-    return "Trang danh sách xe máy";
-})->name('motorcycles.index');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Phần của Đỗ Văn Quân - Loại xe & Hồ sơ [cite: 1, 16]
-Route::get('/categories', function () {
-    return "Trang loại xe";
-})->name('categories.index');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/profile', function () {
-    return "Trang hồ sơ cá nhân";
-})->name('user.profile');
-
-// Phần của Hoàng Ngọc Thành - Đơn hàng [cite: 1, 38]
-Route::get('/cart', function () {
-    return "Trang giỏ hàng";
-})->name('orders.cart');
-
-// Phần của Phan Đăng Huy - Xác thực [cite: 1, 3]
-Route::get('/login', function () {
-    return "Trang đăng nhập";
-})->name('login');
-
-Route::get('/register', function () {
-    return "Trang đăng ký";
-})->name('register');
-
-Route::post('/logout', function () {
-    return "Xử lý đăng xuất";
-})->name('logout');
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('roles', RoleController::class)->except(['show']);
+        Route::resource('users', UserController::class)->except(['show']);
+    });
+});

@@ -3,20 +3,20 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Role; // Khai báo Model ở đây
+use App\Models\Role;
 
 class RoleSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        Role::create([
-            'name' => 'admin',
-            'description' => 'Quản trị viên'
-        ]);
+        Role::firstOrCreate(
+            ['name' => 'admin'],
+            ['description' => 'Quản trị hệ thống']
+        );
 
-        Role::create([
-            'name' => 'customer',
-            'description' => 'Khách hàng'
-        ]);
+        Role::firstOrCreate(
+            ['name' => 'staff'],
+            ['description' => 'Nhân viên']
+        );
     }
 }
