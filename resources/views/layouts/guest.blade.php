@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,16 +22,16 @@
             margin: 0;
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
             background:
-                radial-gradient(circle at top left, rgba(37,99,235,0.08), transparent 30%),
-                radial-gradient(circle at bottom right, rgba(15,23,42,0.08), transparent 30%),
+                radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.08), transparent 30%),
                 #f8fafc;
             color: var(--text-dark);
         }
 
         .navbar-custom {
-            background: rgba(255,255,255,0.86);
+            background: rgba(255, 255, 255, 0.86);
             backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(226,232,240,0.9);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.9);
         }
 
         .navbar-brand {
@@ -117,7 +118,7 @@
             position: absolute;
             width: 240px;
             height: 240px;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 50%;
             top: -70px;
             right: -70px;
@@ -128,7 +129,7 @@
             position: absolute;
             width: 180px;
             height: 180px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 50%;
             bottom: -60px;
             left: -40px;
@@ -149,7 +150,7 @@
         }
 
         .mini-stat {
-            background: rgba(255,255,255,0.12);
+            background: rgba(255, 255, 255, 0.12);
             border-radius: 18px;
             padding: 18px;
         }
@@ -161,7 +162,7 @@
         }
 
         .mini-stat small {
-            color: rgba(255,255,255,0.8);
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .section-space {
@@ -271,7 +272,7 @@
         }
 
         .cta-box p {
-            color: rgba(255,255,255,0.78);
+            color: rgba(255, 255, 255, 0.78);
             margin-bottom: 0;
         }
 
@@ -356,6 +357,7 @@
     </style>
     @stack('styles')
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
         <div class="container">
@@ -375,9 +377,18 @@
                     </li>
 
                     @auth
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                        <li class="nav-item d-flex align-items-center me-2">
+                            <span class="fw-semibold text-dark">
+                                Xin chào, {{ auth()->user()->name }}
+                            </span>
                         </li>
+                        
+                        @if(auth()->user()->role && auth()->user()->role->name === 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                            </li>
+                        @endif
+
                         <li class="nav-item">
                             <form action="{{ route('logout') }}" method="POST" class="d-inline">
                                 @csrf
@@ -410,4 +421,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')
 </body>
+
 </html>
