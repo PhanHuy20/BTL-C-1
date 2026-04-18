@@ -21,21 +21,21 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+{
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->route('dashboard')->with('success', 'Đăng nhập thành công.');
-        }
-
-        return back()->withErrors([
-            'email' => 'Email hoặc mật khẩu không đúng.'
-        ])->onlyInput('email');
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+        return redirect()->route('dashboard')->with('success', 'Đăng nhập thành công.');
     }
+
+    return back()->withErrors([
+        'email' => 'Email hoặc mật khẩu không đúng.'
+    ])->onlyInput('email');
+}
 
     public function register(Request $request)
     {

@@ -1,62 +1,68 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Đăng nhập hệ thống</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(135deg, #2563eb, #1e3a8a);
-            height: 100vh;
-        }
-        .login-card {
-            width: 420px;
-            border-radius: 16px;
-        }
-    </style>
-</head>
-<body class="d-flex justify-content-center align-items-center">
-    <div class="card shadow-lg login-card p-4">
-        <div class="card-body">
-            <h2 class="text-center mb-4">Đăng nhập</h2>
+@extends('layouts.auth')
 
-            @if(session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
+@section('title', 'Đăng nhập')
+@section('hero_title', 'Đăng nhập để tiếp tục quản lý hệ thống')
+@section('hero_subtitle', 'Truy cập khu vực quản trị, theo dõi dữ liệu kinh doanh và xử lý các giao dịch nhanh chóng.')
 
-            <form action="{{ route('login.submit') }}" method="POST">
-                @csrf
+@section('auth_content')
+    <h2 class="form-title">Đăng nhập</h2>
+    <p class="form-subtitle">
+        Chào mừng bạn quay lại. Vui lòng nhập thông tin tài khoản để tiếp tục.
+    </p>
 
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" value="{{ old('email') }}">
-                    @error('email')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Mật khẩu</label>
-                    <input type="password" name="password" class="form-control">
-                    @error('password')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                <button class="btn btn-primary w-100">Đăng nhập</button>
-            </form>
-
-            <div class="text-center mt-3">
-                <span>Chưa có tài khoản?</span>
-                <a href="{{ route('register') }}">Đăng ký</a>
-            </div>
-
-            <div class="mt-3 text-muted small">
-                Admin: admin@gmail.com / 123456<br>
-                Staff: staff@gmail.com / 123456
-            </div>
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
         </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <form action="{{ route('login.submit') }}" method="POST">
+        @csrf
+
+        <div class="mb-3">
+            <label class="form-label">Địa chỉ email</label>
+            <input
+                type="email"
+                name="email"
+                class="form-control @error('email') is-invalid @enderror"
+                value="{{ old('email') }}"
+                placeholder="Nhập email của bạn"
+            >
+            @error('email')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Mật khẩu</label>
+            <input
+                type="password"
+                name="password"
+                class="form-control @error('password') is-invalid @enderror"
+                placeholder="Nhập mật khẩu"
+            >
+            @error('password')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <button type="submit" class="btn btn-main mt-2">Đăng nhập</button>
+    </form>
+
+    <div class="form-footer">
+        Chưa có tài khoản?
+        <a href="{{ route('register') }}">Đăng ký ngay</a>
     </div>
-</body>
-</html>
+
+    <div class="hint-box">
+        <strong>Tài khoản mẫu:</strong><br>
+        Admin: admin@gmail.com / 123456<br>
+        Staff: staff@gmail.com / 123456
+    </div>
+@endsection
