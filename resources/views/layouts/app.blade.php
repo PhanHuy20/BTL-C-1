@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,7 +59,7 @@
             align-items: center;
             gap: 14px;
             padding: 10px 12px 22px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             margin-bottom: 18px;
         }
 
@@ -71,7 +72,7 @@
             align-items: center;
             justify-content: center;
             font-size: 22px;
-            box-shadow: 0 8px 20px rgba(59,130,246,0.35);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.35);
         }
 
         .brand-text h4 {
@@ -81,20 +82,20 @@
         }
 
         .brand-text small {
-            color: rgba(255,255,255,0.65);
+            color: rgba(255, 255, 255, 0.65);
         }
 
         .menu-title {
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: rgba(255,255,255,0.45);
+            color: rgba(255, 255, 255, 0.45);
             padding: 10px 12px;
             margin-top: 8px;
         }
 
         .sidebar .nav-link {
-            color: rgba(255,255,255,0.88);
+            color: rgba(255, 255, 255, 0.88);
             border-radius: 14px;
             padding: 12px 14px;
             margin-bottom: 6px;
@@ -208,7 +209,7 @@
             width: 220px;
             height: 220px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.06);
+            background: rgba(255, 255, 255, 0.06);
         }
 
         .welcome-banner h2 {
@@ -218,7 +219,7 @@
 
         .welcome-banner p {
             margin: 0;
-            color: rgba(255,255,255,0.78);
+            color: rgba(255, 255, 255, 0.78);
         }
 
         .stat-card {
@@ -239,14 +240,14 @@
             width: 90px;
             height: 90px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.12);
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .stat-card .icon-box {
             width: 52px;
             height: 52px;
             border-radius: 16px;
-            background: rgba(255,255,255,0.16);
+            background: rgba(255, 255, 255, 0.16);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -272,11 +273,25 @@
             opacity: 0.9;
         }
 
-        .bg-primary-soft { background: var(--primary-soft); }
-        .bg-success-soft { background: var(--success-soft); }
-        .bg-warning-soft { background: var(--warning-soft); }
-        .bg-danger-soft  { background: var(--danger-soft); }
-        .bg-purple-soft  { background: var(--purple-soft); }
+        .bg-primary-soft {
+            background: var(--primary-soft);
+        }
+
+        .bg-success-soft {
+            background: var(--success-soft);
+        }
+
+        .bg-warning-soft {
+            background: var(--warning-soft);
+        }
+
+        .bg-danger-soft {
+            background: var(--danger-soft);
+        }
+
+        .bg-purple-soft {
+            background: var(--purple-soft);
+        }
 
         .panel-card {
             background: white;
@@ -441,6 +456,7 @@
 
     @stack('styles')
 </head>
+
 <body>
     <div class="app-wrapper">
         <aside class="sidebar">
@@ -456,7 +472,8 @@
 
             <div class="menu-title">Tổng quan</div>
             <nav class="nav flex-column">
-                <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}"
+                    class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <i class="bi bi-grid-1x2-fill"></i>
                     <span>Dashboard</span>
                 </a>
@@ -464,43 +481,41 @@
 
             <div class="menu-title">Quản lý hệ thống</div>
             <nav class="nav flex-column">
-                <a href="{{ route('roles.index') }}" class="nav-link {{ request()->routeIs('roles.*') ? 'active' : '' }}">
+                <a href="{{ route('roles.index') }}"
+                    class="nav-link {{ request()->routeIs('roles.*') ? 'active' : '' }}">
                     <i class="bi bi-shield-lock-fill"></i>
                     <span>Vai trò</span>
                 </a>
 
-                <a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                <a href="{{ route('users.index') }}"
+                    class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
                     <i class="bi bi-people-fill"></i>
                     <span>Tài khoản</span>
                 </a>
 
-                <a href="{{ route('customers.index') }}" class="nav-link {{ request()->routeIs('customers.*') ? 'active' : '' }}">
-                    <i class="bi bi-person-vcard-fill"></i>
-                    <span>Khách hàng</span>
+                <a href="{{ route('cart.index') }}" class="nav-link {{ request()->routeIs('cart.*') ? 'active' : '' }}">
+                    <i class="bi bi-cart-fill"></i>
+                    <span>Giỏ hàng</span>
                 </a>
 
-                <a href="{{ route('motorcycles.index') }}" class="nav-link {{ request()->routeIs('motorcycles.*') ? 'active' : '' }}">
+                <a href="{{ route('motorcycles.index') }}"
+                    class="nav-link {{ request()->routeIs('motorcycles.*') ? 'active' : '' }}">
                     <i class="bi bi-scooter"></i>
                     <span>Xe máy</span>
                 </a>
 
-                <a href="{{ route('orders.index') }}" class="nav-link {{ request()->routeIs('orders.*') ? 'active' : '' }}">
+                <a href="{{ route('orders.index') }}"
+                    class="nav-link {{ request()->routeIs('orders.*') ? 'active' : '' }}">
                     <i class="bi bi-receipt-cutoff"></i>
                     <span>Đơn hàng</span>
                 </a>
 
-                <a href="{{ route('payments.index') }}" class="nav-link {{ request()->routeIs('payments.*') ? 'active' : '' }}">
+                <a href="{{ route('payments.index') }}"
+                    class="nav-link {{ request()->routeIs('payments.*') ? 'active' : '' }}">
                     <i class="bi bi-credit-card-2-front-fill"></i>
                     <span>Thanh toán</span>
                 </a>
             </nav>
-
-            <div class="menu-title">Tài khoản</div>
-            <nav class="nav flex-column">
-                <a href="#" class="nav-link">
-                    <i class="bi bi-person-circle"></i>
-                    <span>Hồ sơ cá nhân</span>
-                </a>
 
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
@@ -569,4 +584,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')
 </body>
+
 </html>

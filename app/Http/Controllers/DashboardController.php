@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
 use App\Models\Motorcycle;
 use App\Models\Order;
 use App\Models\Role;
@@ -16,12 +15,11 @@ class DashboardController extends Controller
 
     $todayOrders = Order::whereDate('created_at', now()->toDateString())->count();
 
-    $totalCustomers = Customer::count();
+    $totalUsers = User::count();
     $totalMotorcycles = Motorcycle::count();
     $totalUsers = User::count();
     $totalRoles = Role::count();
 
-    // KHÔNG dùng status nữa
     $completedPayments = 0;
     $pendingOrders = 0;
 
@@ -34,7 +32,7 @@ class DashboardController extends Controller
     return view('dashboard.index', compact(
         'monthlyRevenue',
         'todayOrders',
-        'totalCustomers',
+        'totalUsers',
         'totalMotorcycles',
         'totalUsers',
         'totalRoles',

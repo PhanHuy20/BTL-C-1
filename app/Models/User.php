@@ -35,4 +35,9 @@ class User extends Authenticatable
     {
         return $this->role && $this->role->name === 'staff';
     }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
 }
