@@ -504,6 +504,18 @@
                     <span>Xe máy</span>
                 </a>
 
+                <a href="{{ route('brands.index') }}"
+                    class="nav-link {{ request()->routeIs('brands.*') ? 'active' : '' }}">
+                    <i class="bi bi-building"></i>
+                    <span>Hãng xe</span>
+                </a>
+
+                <a href="{{ route('categories.index') }}"
+                    class="nav-link {{ request()->routeIs('categories.*') ? 'active' : '' }}">
+                    <i class="bi bi-tag"></i>
+                    <span>Loại xe</span>
+                </a>
+
                 <a href="{{ route('orders.index') }}"
                     class="nav-link {{ request()->routeIs('orders.*') ? 'active' : '' }}">
                     <i class="bi bi-receipt-cutoff"></i>

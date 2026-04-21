@@ -12,9 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('motorcycles', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+    $table->id();
+    $table->string('name');
+    $table->unsignedBigInteger('brand_id');
+    $table->unsignedBigInteger('category_id');
+    $table->decimal('price', 12, 2);
+    $table->text('description')->nullable();
+    $table->timestamps();
+});
+
     }
 
     /**

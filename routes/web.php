@@ -27,6 +27,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
 
     Route::resource('motorcycles', MotorcycleController::class);
     Route::resource('orders', OrderController::class);
@@ -35,6 +36,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::middleware('role:admin')->group(function () {
         Route::resource('roles', RoleController::class)->except(['show']);
         Route::resource('users', UserController::class)->except(['show']);
+        Route::resource('brands', \App\Http\Controllers\BrandController::class)->except(['show']);
+        Route::resource('categories', \App\Http\Controllers\CategoryController::class)->except(['show']);
+
     });
     Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
