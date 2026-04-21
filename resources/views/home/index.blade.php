@@ -46,8 +46,8 @@
                             <small>Mẫu xe</small>
                         </div>
                         <div class="mini-stat">
-                            <h5>{{ $totalCustomers ?? 0 }}</h5>
-                            <small>Khách hàng</small>
+                            <h5>{{ $totalUsers ?? 0 }}</h5>
+                            <small>Người dùng</small>
                         </div>
                         <div class="mini-stat">
                             <h5>{{ $totalOrders ?? 0 }}</h5>

@@ -48,11 +48,11 @@
         <div class="col-md-6 col-xl-3">
             <div class="stat-card bg-warning-soft">
                 <div class="icon-box">
-                    <i class="bi bi-people-fill"></i>
+                    <i class="bi bi-cart-fill"></i>
                 </div>
-                <h6>Khách hàng</h6>
-                <h3>{{ $totalCustomers ?? 0 }}</h3>
-                <p>Tổng số khách hàng trong hệ thống</p>
+                <h6>Người dùng</h6>
+                <h3>{{ $totalUsers ?? 0 }}</h3>
+                <p>Tổng số tài khoản trong hệ thống</p>
             </div>
         </div>
 
@@ -87,8 +87,8 @@
                             <thead>
                                 <tr>
                                     <th>Mã đơn</th>
-                                    <th>Khách hàng</th>
-                                    <th>Ngày đặt</th>
+                                    <th>Khách/User</th>
+                                    <th>Ngày tạo</th>
                                     <th>Tổng tiền</th>
                                     <th>Trạng thái</th>
                                 </tr>
@@ -97,16 +97,20 @@
                                 @forelse($recentOrders ?? [] as $order)
                                     <tr>
                                         <td><strong>#{{ $order->id }}</strong></td>
-                                        <td>{{ $order->customer->full_name ?? 'Khách lẻ' }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($order->order_date)->format('d/m/Y') }}</td>
-                                        <td>{{ number_format($order->total_amount, 0, ',', '.') }}đ</td>
                                         <td>
-                                            @if($order->status === 'completed')
+                                            {{ $order->user->name ?? $order->customer->full_name ?? 'Người dùng' }}
+                                        </td>
+                                        <td>
+                                            {{ \Carbon\Carbon::parse($order->created_at ?? now())->format('d/m/Y') }}
+                                        </td>
+                                        <td>{{ number_format($order->total_amount ?? 0, 0, ',', '.') }}đ</td>
+                                        <td>
+                                            @if(($order->status ?? '') === 'completed')
                                                 <span class="badge-soft-success">Hoàn thành</span>
-                                            @elseif($order->status === 'pending')
+                                            @elseif(($order->status ?? '') === 'pending')
                                                 <span class="badge-soft-warning">Đang xử lý</span>
                                             @else
-                                                <span class="badge-soft-danger">{{ $order->status }}</span>
+                                                <span class="badge-soft-danger">{{ $order->status ?? 'N/A' }}</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -139,12 +143,12 @@
                         <i class="bi bi-plus-circle-fill"></i>
                     </a>
 
-                    <a href="{{ route('customers.create') }}" class="quick-action">
+                    <a href="{{ route('cart.index') }}" class="quick-action">
                         <div>
-                            <strong>Thêm khách hàng</strong>
-                            <div class="sub-text">Cập nhật dữ liệu khách hàng</div>
+                            <strong>Xem giỏ hàng</strong>
+                            <div class="sub-text">Kiểm tra sản phẩm đã chọn</div>
                         </div>
-                        <i class="bi bi-person-plus-fill"></i>
+                        <i class="bi bi-cart-fill"></i>
                     </a>
 
                     <a href="{{ route('orders.create') }}" class="quick-action">
@@ -184,13 +188,13 @@
                                 <div>
                                     <div style="font-weight: 700;">{{ $bike->name }}</div>
                                     <div class="sub-text">
-                                        {{ $bike->brand->name ?? 'Không rõ hãng' }} • {{ $bike->color }}
+                                        {{ $bike->brand->name ?? 'Không rõ hãng' }} • {{ $bike->color ?? 'N/A' }}
                                     </div>
                                 </div>
                             </div>
                             <div class="text-end">
                                 <div style="font-weight: 800; color: #dc2626;">
-                                    {{ $bike->quantity }}
+                                    {{ $bike->quantity ?? 0 }}
                                 </div>
                                 <small class="text-muted">còn lại</small>
                             </div>
