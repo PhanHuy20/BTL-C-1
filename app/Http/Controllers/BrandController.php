@@ -7,53 +7,68 @@ use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
-    // Hiển thị danh sách brand
     public function index()
     {
-        $brands = Brand::all();
-        return view('brands.index', compact('brands'));
+        $keyword = trim((string) request('q', ''));
+
+        $brands = Brand::query()
+            ->withCount('motorcycles')
+            ->when($keyword !== '', function ($query) use ($keyword) {
+                $query->where('name', 'like', '%' . $keyword . '%');
+            })
+            ->orderByDesc('id')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('brands.index', compact('brands', 'keyword'));
     }
 
-    // Form thêm brand
     public function create()
     {
         return view('brands.create');
     }
 
-    // Lưu brand mới
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255'
+            'name' => 'required|string|max:255|unique:brands,name'
         ]);
 
-        Brand::create($request->all());
+        Brand::create([
+            'name' => trim($request->name),
+        ]);
 
-        return redirect()->route('brands.index')->with('success', 'Thêm brand thành công');
+        return redirect()->route('brands.index')->with('success', 'Thêm hãng xe thành công.');
     }
 
-    // Form sửa brand
     public function edit(Brand $brand)
     {
         return view('brands.edit', compact('brand'));
     }
 
-    // Cập nhật brand
     public function update(Request $request, Brand $brand)
     {
         $request->validate([
-            'name' => 'required|string|max:255'
+            'name' => 'required|string|max:255|unique:brands,name,' . $brand->id
         ]);
 
-        $brand->update($request->all());
+        $brand->update([
+            'name' => trim($request->name),
+        ]);
 
-        return redirect()->route('brands.index')->with('success', 'Cập nhật brand thành công');
+        return redirect()->route('brands.index')->with('success', 'Cập nhật hãng xe thành công.');
     }
 
-    // Xóa brand
     public function destroy(Brand $brand)
     {
+        if ($brand->motorcycles()->exists()) {
+            return redirect()
+                ->route('brands.index')
+                ->with('error', 'Không thể xóa hãng xe này vì đang được gán cho xe máy.');
+        }
+
         $brand->delete();
-        return redirect()->route('brands.index')->with('success', 'Xóa brand thành công');
+
+        return redirect()->route('brands.index')->with('success', 'Xóa hãng xe thành công.');
     }
 }

@@ -1,15 +1,29 @@
 @extends('layouts.app')
 
+@section('page-title', 'Thêm loại xe')
+@section('page-subtitle', 'Tạo mới thông tin loại xe')
+
 @section('content')
-<div class="container">
-    <h1>Thêm Category</h1>
-    <form action="{{ route('categories.store') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="name">Tên Category</label>
-            <input type="text" name="name" class="form-control" required>
-        </div>
-        <button class="btn btn-success mt-2">Lưu</button>
-    </form>
+<div class="card panel-card">
+    <div class="card-header d-flex align-items-center justify-content-between">
+        <h5 class="panel-title">Thêm loại xe</h5>
+        <a href="{{ route('categories.index') }}" class="btn btn-outline-secondary btn-sm">Quay lại</a>
+    </div>
+    <div class="card-body">
+        <form action="{{ route('categories.store') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label for="name" class="form-label">Tên loại xe</label>
+                <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror"
+                    value="{{ old('name') }}" required>
+                @error('name')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <button class="btn btn-success">Lưu</button>
+            <a href="{{ route('categories.index') }}" class="btn btn-light border">Hủy</a>
+        </form>
+    </div>
 </div>
 @endsection
